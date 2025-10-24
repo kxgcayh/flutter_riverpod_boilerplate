@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final routerListenableProvider = AutoDisposeAsyncNotifierProvider<RouterListener, void>(() {
+final routerListenableProvider = AsyncNotifierProvider.autoDispose<RouterListener, void>(() {
   return RouterListener();
 });
 
-class RouterListener extends AutoDisposeAsyncNotifier<void> implements Listenable {
+class RouterListener extends AsyncNotifier<void> implements Listenable {
   VoidCallback? _routerListener;
 
   @override
   Future<void> build() async {
-    listenSelf((_, __) {
+    listenSelf((_, _) {
       if (state.isLoading) return;
       _routerListener?.call();
     });

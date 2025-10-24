@@ -9,7 +9,7 @@ part 'app_router.g.dart';
   path: PostRoute.path,
   routes: [TypedGoRoute<PostDetailRoute>(path: PostDetailRoute.path)],
 )
-class PostRoute extends GoRouteData with _$PostRoute {
+class PostRoute extends GoRouteData with $PostRoute {
   const PostRoute();
   static const path = '/post';
 
@@ -19,7 +19,7 @@ class PostRoute extends GoRouteData with _$PostRoute {
   }
 }
 
-class PostDetailRoute extends GoRouteData with _$PostDetailRoute {
+class PostDetailRoute extends GoRouteData with $PostDetailRoute {
   const PostDetailRoute({required this.id});
   final String id;
   static const path = 'detail/:id';

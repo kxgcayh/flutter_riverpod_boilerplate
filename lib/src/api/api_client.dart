@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hooks_riverpod/misc.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:flutter_riverpod_boilerplate/src/exceptions/api_exception.dart';
 
