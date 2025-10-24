@@ -34,15 +34,9 @@ class PostPage extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              post.title,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
+                            Text(post.title, style: Theme.of(context).textTheme.titleMedium),
                             SizedBox(height: 4),
-                            Text(
-                              post.body,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
+                            Text(post.body, style: Theme.of(context).textTheme.bodyMedium),
                           ],
                         ),
                       ),
@@ -52,9 +46,7 @@ class PostPage extends ConsumerWidget {
             ],
           ),
         ),
-        error: (error, stack) => Center(
-          child: Text('PostPage is Error: $error'),
-        ),
+        error: (error, stack) => Center(child: Text('PostPage is Error: $error')),
         loading: () => Center(child: CircularProgressIndicator()),
       ),
     );
