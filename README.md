@@ -1,7 +1,5 @@
 # Flutter Boilerplate - Repository Pattern
 
-![Repository Pattern Architecture](https://code.kineticastudios.com/kautsar.al.bana/flutter_boilerplate/src/branch/main/docs/architecture.png)
-
 Design patterns are useful templates that help us solve common problems in software design.
 
 And when it comes to app architecture, structural design patterns can help us decide how the different parts of the app are organized.
@@ -29,16 +27,16 @@ To develop this applications you nedd to read the doccumentations
 ## Installation
 
 ```shell
-$ git clone https://code.kineticastudios.com/kautsar.al.bana/flutter_boilerplate.git <project-name>
-$ cd <project-name>
-$ flutter pub get && dart run build_runner build --delete-conflicting-outputs
+git clone https://github.com/kxgcayh/flutter_riverpod_boilerplate.git <project-name>
+cd <project-name>
+flutter pub get && dart run build_runner build --delete-conflicting-outputs
 ```
 
 ## Usage
 
 ```shell
-$ cd <project-name>
-$ flutter pub get && dart run build_runner build --delete-conflicting-outputs
+cd <project-name>
+flutter pub get && dart run build_runner build --delete-conflicting-outputs
 ```
 
 - iOS
@@ -53,21 +51,26 @@ $ flutter pub get && dart run build_runner build --delete-conflicting-outputs
 
   - Generate APKs
     To generate apks, you can use the commands
+
     ```shell
-    $ flutter build apk --target-platform android-arm,android-arm64,android-x64 --split-per-abi
+    flutter build apk --target-platform android-arm,android-arm64,android-x64 --split-per-abi
     ```
+
     And list all generated files use commands
+
     ```shell
-    $ ls ./build/app/outputs/flutter-apk/
+    ls ./build/app/outputs/flutter-apk/
     ```
 
 ## Repository Design Pattern
 
 In this context, repositories are found in the data layer. And their job is to:
+
 - isolate domain models (or entities) from the implementation details of the data sources in the data layer.
 - convert data transfer objects to validated entities that are understood by the domain layer
 - (optionally) perform operations such as data caching.
-> The diagram above shows just one of many possible ways of architecting your app. Things will look different if you follow a different architecture such as MVC, MVVM, or Clean Architecture, but the same concepts apply.
+
+> Things will look different if you follow a different architecture such as MVC, MVVM, or Clean Architecture, but the same concepts apply.
 
 Also note how the widgets belong to the presentation layer, which has nothing to do with business logic or networking code.
 
