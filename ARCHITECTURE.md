@@ -26,7 +26,9 @@ lib/
 │   ├── logging/                 # Structured logging using the logger package
 │   ├── network/                 # Dio client, interceptors, and Result<T> sealed types
 │   ├── router/                  # Type-safe GoRouter setup (go_router_builder)
-│   └── theme/                   # Material 3 tokens, colors, and ThemeProvider
+│   ├── storage/                 # SecureStorageService & PreferencesService
+│   ├── theme/                   # Material 3 tokens, colors, and ThemeProvider
+│   └── widgets/                 # AppCachedImage, AppAvatar, and reusable primitives
 └── features/                    # Independent feature modules
     ├── chat/
     │   ├── data/                # Data sources, serialization models, repo implementations
@@ -149,7 +151,6 @@ When a service is generic and completely reusable across unrelated apps, place i
 
 * **`core/connectivity/`**: Network reachability monitor (Wi-Fi vs Cellular vs Offline).
 * **`core/analytics/`**: Centralized event tracking wrapper (Firebase Analytics, Mixpanel, Segment).
-* **`core/secure_storage/`**: OS Keychain / EncryptedSharedPreferences wrapper.
 
 ### 4. Cross-Feature Boundary Rules
 To maintain high modularity and prevent tight coupling:
@@ -162,16 +163,21 @@ To maintain high modularity and prevent tight coupling:
 
 The `core/` package houses shared, domain-agnostic infrastructure:
 
-1. **`core/network/`**:
+1. **`core/storage/`**:
+   * **Sensitive Data:** [`SecureStorageService`](lib/core/storage/secure_storage_service.dart) wrapping `FlutterSecureStorage` (hardware Keystore on Android, Keychain on iOS) for tokens and credentials.
+   * **General Preferences:** [`PreferencesService`](lib/core/storage/preferences_service.dart) wrapping `SharedPreferences` for theme mode, notification toggles, and lightweight state.
+2. **`core/widgets/`**:
+   * Reusable UI primitives such as [`AppCachedImage`](lib/core/widgets/app_cached_image.dart) (powered by `cached_network_image_ce` with memory/disk caching) and [`AppAvatar`](lib/core/widgets/app_avatar.dart).
+3. **`core/network/`**:
    * Centralized `Dio` client with configured timeouts, `LoggingInterceptor`, and `ErrorInterceptor`.
    * Sealed `Result<T>` type (`Success` vs `Failure`) for type-safe outcome handling with Dart 3 pattern matching.
-2. **`core/errors/`**:
+4. **`core/errors/`**:
    * Domain-level `AppFailure` definitions and data-level `AppException` error hierarchy.
-3. **`core/logging/`**:
+5. **`core/logging/`**:
    * Unified `AppLogger` utility wrapping the `logger` package to standardize debug, info, and error tracking across the codebase.
-4. **`core/router/`**:
+6. **`core/router/`**:
    * Type-safe route definitions (`app_routes.dart`) powered by `go_router` and `go_router_builder`.
-5. **`core/theme/`**:
+7. **`core/theme/`**:
    * Centralized color tokens (`AppColors`), typography, and Light/Dark `ThemeData` definitions.
 
 ---
@@ -179,6 +185,7 @@ The `core/` package houses shared, domain-agnostic infrastructure:
 ## ⚡️ Performance & Impeller Optimization Guidelines
 
 1. **`const` Constructors:** Maximizes element reuse and skips unneeded widget rebuilds.
-2. **`RepaintBoundary` on Dynamic Subtrees:** Isolates actively animating or frequently updated widgets (e.g. chat bubbles) to prevent full-screen canvas redraws.
+2. **`RepaintBoundary` on Dynamic Subtrees:** Isolates actively animating or frequently updated widgets (e.g. chat bubbles, avatars) to prevent full-screen canvas redraws.
 3. **`ListView.builder` / Reverse Lists:** Lazy viewport rendering to ensure consistent 60/120 FPS frame rates on Android and iOS.
 4. **Localized Hooks:** Using `flutter_hooks` for text input and transient focus state prevents rebuilding entire parent screen trees.
+5. **Disk & Memory Image Caching:** Using `cached_network_image_ce` to prevent repeated network decodes on high-density displays.
