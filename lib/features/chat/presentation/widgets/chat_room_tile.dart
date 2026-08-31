@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_avatar.dart';
 import '../../data/models/chat_room.dart';
 
 /// Modern chat room list tile with avatar, online indicator, and unread badge
@@ -41,42 +42,11 @@ class ChatRoomTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
-            Stack(
-              children: [
-                CircleAvatar(
-                  radius: 26,
-                  backgroundColor: isDark
-                      ? AppColors.darkSurfaceVariant
-                      : AppColors.primaryContainer,
-                  child: Text(
-                    room.name.isNotEmpty ? room.name[0].toUpperCase() : '?',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: isDark
-                          ? AppColors.primaryLight
-                          : AppColors.primaryDark,
-                    ),
-                  ),
-                ),
-                if (room.isOnline)
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      width: 14,
-                      height: 14,
-                      decoration: BoxDecoration(
-                        color: AppColors.success,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: theme.scaffoldBackgroundColor,
-                          width: 2.5,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
+            AppAvatar(
+              imageUrl: room.avatarUrl,
+              fallbackName: room.name,
+              radius: 26,
+              isOnline: room.isOnline,
             ),
             const SizedBox(width: 14),
             Expanded(

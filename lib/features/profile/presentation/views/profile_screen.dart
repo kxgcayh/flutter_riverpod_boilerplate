@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_avatar.dart';
 import '../viewmodels/profile_view_model.dart';
 
 /// User profile screen with editable details
@@ -30,17 +31,11 @@ class ProfileScreen extends HookConsumerWidget {
                 Center(
                   child: Stack(
                     children: [
-                      CircleAvatar(
+                      AppAvatar(
+                        imageUrl: user.avatarUrl,
+                        fallbackName: user.name,
                         radius: 52,
-                        backgroundColor: AppColors.primary,
-                        child: Text(
-                          user.name.isNotEmpty ? user.name[0] : 'U',
-                          style: const TextStyle(
-                            fontSize: 38,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
+                        isOnline: user.isOnline,
                       ),
                       Positioned(
                         right: 0,
